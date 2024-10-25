@@ -1,4 +1,9 @@
+
 cmake_minimum_required(VERSION 3.28)
+
+project(tyo)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(MLIR REQUIRED CONFIG)
 find_package(LLVM REQUIRED CONFIG)
 list(APPEND CMAKE_MODULE_PATH "${MLIR_CMAKE_DIR}")
@@ -27,10 +32,21 @@ add_subdirectory(include/tyo)
 
 
 
-add_executable(tyo tyo.cpp parser/AST.cpp)
-target_link_libraries(tyo ${llvm_libs} LLVMSupport )
+add_executable(tyo tyo.cpp parser/AST.cpp mlir/Dialect.cpp )
+add_dependencies(tyo tyoIncGen)
+target_link_libraries(tyo
+  PRIVATE
+  ${llvm_libs} LLVMSupport
+    MLIRAnalysis
+    MLIRFunctionInterfaces
+    MLIRIR
+    MLIRParser
+    MLIRSideEffectInterfaces
+    MLIRTransforms)
 target_include_directories(tyo PUBLIC ${CMAKE_SOURCE_DIR}/include/)
+target_include_directories(tyo PUBLIC ${CMAKE_BINARY_DIR}/include/)
 llvm_update_compile_flags(tyo)
+
 # set(LLVM_TARGET_DEFINITIONS toyDialect.td)
 
 ## Set your TableGen files

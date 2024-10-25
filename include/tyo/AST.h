@@ -12,14 +12,13 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef TOY_AST_H
-#define TOY_AST_H
+#ifndef TYO_AST_H
+#define TYO_AST_H
 
 #include "Lexer.h"
 
 #include "llvm/ADT/ArrayRef.h"
 #include "llvm/ADT/StringRef.h"
-#include "llvm/Support/Casting.h"
 #include <optional>
 #include <utility>
 #include <vector>
@@ -243,4 +242,4 @@ void dump(ModuleAST &);
 
 } // namespace toy
 
-#endif // TOY_AST_H
+#endif // TYO_AST_H
